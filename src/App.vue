@@ -1,9 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer 
-    v-model="drawer" 
-    width="210px"
-    fixed app>
+    <v-navigation-drawer v-model="drawer" width="210px" fixed app>
         <v-layout align-center
           justify-center
           wrap>
@@ -72,7 +69,7 @@
           <v-list-tile
             v-else
             :key="i"
-            @click=""
+            
           >
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
@@ -333,27 +330,51 @@
                         max-width="649"
                       >
                         <v-card>
+                          <v-toolbar dark color="white">
+                            <v-spacer></v-spacer>
+                            <v-btn icon dark @click="dialog = false">
+                              <v-icon color="black" left>close</v-icon>
+                            </v-btn>
+                          </v-toolbar>
                           <v-card-title primary-title>
-                            <v-layout row wrap>
-                              <v-flex xs1>
-                                <v-avatar width="50px" height="50px" >
-                                  <img
-                                  src="https://cdn.vuetifyjs.com/images/john.jpg"
-                                  alt="John"
-                                  >
-                                </v-avatar>
-                              </v-flex>
-                              <v-flex xs1>
-                                
-                              </v-flex>
-                            </v-layout>
                           </v-card-title>
                           <v-card-text>
-                            Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+
+                            <v-data-table
+                              :items="feeds"                        
+                              hide-actions
+                              hide-headers
+                              light
+                              >
+                              <template v-slot:items="props">
+
+                                <td style="width:50px" rowspan="">
+                                  <v-list-tile-avatar>
+                                    <img :src="props.item.avatar">
+                                  </v-list-tile-avatar>
+                                </td>
+                                <td>
+                                  <p margin="2em 4em">{{ props.item.name }} <br> 
+                                  {{ props.item.date }} </p>
+                                  <p margin="2em 4em">{{ props.item.descrip }}</p>
+                                </td>
+                              </template> 
+                            </v-data-table>
+
                           </v-card-text>
 
                           <v-card-actions>
                             <v-spacer></v-spacer>
+                            <v-btn
+                              flat
+                              round
+                              color="orange"
+                              background-color="orange"
+                              @click="dialog = false"
+                            >
+                              Ir a evaluacion
+                            </v-btn>
+
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
@@ -510,6 +531,7 @@
                   <v-card flat>
                     <v-container fluid grid-list-md>
                       <v-layout row wrap>
+                        <!-- Resultados por persona -->
                         <v-flex d-flex xs12 sm6 md6>
                           <v-card color="white" dark>
                             <v-card-title primary class="title">
@@ -566,21 +588,21 @@
                                       </td>
                                     </template>
                                   </v-data-table>
-                                </v-list>
+                                
                                 </div>
                               </v-card-text>
                             </v-card-title>
                             <v-card-text></v-card-text>
                           </v-card>
                         </v-flex>
+
                         <v-flex d-flex xs12 sm6 md6>
                           <v-layout row wrap>
                             <v-flex d-flex>
                               <v-layout row wrap>
-                                <v-flex
-                                  d-flex
-                                  xs12
-                                >
+
+                                <!-- Resultados personales -->
+                                <v-flex d-flex xs12>
                                   <v-card
                                     color="white"
                                     dark>
@@ -588,41 +610,42 @@
                                       <v-card-text>
                                         <div class="subheading black--text font-weight-regular xs-2">
                                           <v-icon color="orange">equalizer</v-icon>
-                                          Resultados por persona
+                                          Resultados personales
                                         </div>
                                       </v-card-text>
-                                      <v-card-text> 
-                                        <div class="body-1 black--text font-weight-thin xs-2">
-
+                                      <v-card-text>
+                                        <v-flex xs11>
+                                          
+                                          <v-list-tile-avatar>
+                                            <img :src="imgUsu">    
+                                          </v-list-tile-avatar>
+                                          
                                           <v-data-table
-                                            :items="itm"
-                                            
+                                            :items="comp"   
                                             hide-actions
                                             hide-headers
-                                            light
-                                          >
+                                            light>
+                                            
                                             <template v-slot:items="props">
-                                              <td style="width:1px"></td>
-                                              <td style="width:50px">
-                                                <v-list-tile-avatar>
-                                                  <img :src="props.item.avatar">
-                                                  {{ props.item.title }}
-                                                  {{ props.item.rut }}
-                                                </v-list-tile-avatar>
+                                              <td width="60px">
+                                                <v-card-text>
+                                                  {{ props.item.titulo }}
+                                                </v-card-text>
+                                                
                                               </td>
                                               <td>
-                                                <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
+                                                <v-progress-linear color="cyan" v-model="props.item.porcent">
                                                   
                                                 </v-progress-linear>
                                               </td>
                                             </template>
                                           </v-data-table>
-                                        
-                                        </div>
+                                        </v-flex>
                                       </v-card-text>
                                     </v-card-title>
                                   </v-card>
                                 </v-flex>
+                                <!-- Resultados por competencia -->
                                 <v-flex
                                   d-flex
                                   xs12
@@ -631,6 +654,21 @@
                                     color="white"
                                     dark
                                   >
+                                    <v-card-title primary class="title">
+                                      <v-card-text>
+                                        <div class="subheading black--text font-weight-regular xs-2">
+                                          <v-icon color="orange">equalizer</v-icon>
+                                          Resultados por competencia
+                                        </div>
+                                      </v-card-text>
+                                      <v-card-text>
+                                        <v-flex xs11>
+                                          <div class="small">
+                                            <line-chart :chart-data="datacollection"></line-chart>
+                                          </div>     
+                                        </v-flex>
+                                      </v-card-text>
+                                    </v-card-title>
                                     <v-card-text></v-card-text>
                                   </v-card>
                                 </v-flex>
@@ -652,8 +690,16 @@
   </v-app>
 </template>
 
+
 <script>
+
+  import LineChart from './LineCharts.js'
+ 
   export default {
+    datacollection: null,
+    components: {
+      LineChart
+    },
     data () {
       return {
         dialog: false,
@@ -703,6 +749,7 @@
           'Dashboard',
         ],
         text: 'pedazo de putanga',
+        imgUsu: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
         search: '',
         pagination: {},
         selected: [],
@@ -796,7 +843,43 @@
             feedb: 'true',
             acc: 'Iniciar',
           }
-        ]
+        ],
+        comp: [
+          {
+            titulo: 'Item 1',
+            porcent: 52,
+          },
+          {
+            titulo: 'Item 2',
+            porcent: 12,
+          }
+        ],
+        feeds: [
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            name: 'Marcelo Scott',
+            date: '01 Abril 2019, 12:01 hrs',
+            descrip: 'Es un excelente lider, pero debes desligar responsabilidades y asumir nuevos desafios.',
+          },
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            name: 'User',
+            date: '03 Mayo 2019, 12:54 hrs',
+            descrip: 'Tienes todo para ser un gran lider, pero debes enfocarte mas en tu trabajo y mantener siempre objetivos claros',
+          },
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            name: 'User',
+            date: '18 Mayo 2019, 10:21 hrs',
+            descrip: 'Tienes todo para ser un gran lider, pero debes enfocarte mas en tu trabajo y mantener siempre objetivos claros',
+          },
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+            name: 'User',
+            date: '27 Junio 2019, 12:34 hrs',
+            descrip: 'Tienes todo para ser un gran lider, pero debes enfocarte mas en tu trabajo y mantener siempre objetivos claros',
+          }
+        ],
       }
     },
     computed: {
@@ -814,6 +897,32 @@
 
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
       }
+    },
+    mounted () {
+      this.fillData()
+    },
+    methods: {
+      fillData () {
+        this.datacollection = {
+          labels: ['Dato 1', 'Dato 2', 'Dato 3'],
+          datasets: [
+            {
+              label: 'Dato 1',
+              backgroundColor: '#C65FE9',
+              data: [4, 5, 10]
+            }, {
+              label: 'Dato 2',
+              backgroundColor: '#3085E5',
+              data: [9, 7, 5]
+            }, {
+              label: 'Dato 3',
+              backgroundColor: '#58CCF4',
+              data: [1, 9, 2]
+            }
+          ]
+        }
+      }
     }
+
   }
 </script>
