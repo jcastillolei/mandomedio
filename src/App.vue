@@ -69,7 +69,6 @@
           <v-list-tile
             v-else
             :key="i"
-            
           >
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
@@ -83,26 +82,19 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed app>
-      <!--<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>-->
-      <v-icon>home</v-icon>
-        <v-flex xs10>
+
           <v-breadcrumbs :items="items">
           <template v-slot:divider>
             <v-icon>chevron_right</v-icon>
           </template>
         </v-breadcrumbs>
-      </v-flex>
-      <v-flex xs2>
-        Proceso: Nº00112255662
-      </v-flex>
-    </v-toolbar>
+
     
     <v-content>
       <v-container>
         <v-layout>
           <v-flex xs12>   
-              <div class="title font-weight-regular">
+              <div class="mmtitle">
                 <v-icon color="orange darken-2">adjust</v-icon>
                 Evaluaciones
               </div> 
@@ -138,7 +130,8 @@
                       :search="search"
                       hide-actions
                       :pagination.sync="pagination"
-                      class="elevation-1"
+                      class="mmtable"
+
                     >
                       <template v-slot:items="props">
                         <td>
@@ -221,7 +214,7 @@
                       :search="search"
                       hide-actions
                       :pagination.sync="pagination"
-                      class="elevation-1"
+                      class="elevation-1 mmtable"
                     >
                       <template v-slot:items="props">
                         <td>
@@ -421,7 +414,7 @@
                       :search="search"
                       hide-actions
                       :pagination.sync="pagination"
-                      class="elevation-1">
+                      class="elevation-1 mmtable">
                       <template v-slot:items="props">
                         <td>
                           
@@ -588,7 +581,22 @@
                                       </td>
                                     </template>
                                   </v-data-table>
-                                
+                                  <v-list-tile
+                                    v-for="item in itm"
+                                    :key="item.title"
+                                    avatar>
+                                    <v-list-tile-avatar>
+                                      <img :src="item.avatar">
+                                    </v-list-tile-avatar>
+
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                                      <v-list-tile-sub-title v-html="item.rut"></v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                    <v-list-tile-content>
+                                      <v-progress-linear color="cyan" v-model="item.valueDeterminate"></v-progress-linear>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
                                 </div>
                               </v-card-text>
                             </v-card-title>
@@ -926,3 +934,71 @@
 
   }
 </script>
+
+<style lang="css" scoped>
+
+  .mmtable .v-table tbody tr :not(:last-child) {
+    border-bottom: none;
+  }
+
+  table.v-table thead tr th.column.text-xs-left {
+    background-color: #fafafa;
+  }
+
+  .mmtable .v-table tbody tr td{
+    padding: 28px 24px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #778b97;
+  }
+
+  button.green--text {
+    width: 158px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #e3f6ed;
+  }
+
+  button.orange--text {
+    width: 158px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #fff9eb;
+  }
+
+  button.red--text {
+    width: 158px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #fef6f6;
+  }
+
+  .mmtitle {
+    height: 38px;
+    font-family: Nunito Sans;
+    font-size: 28px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+    margin-bottom: 40px;
+
+  }
+
+  .v-breadcrumbs {
+    margin-left: 17%;
+  }
+
+
+  
+
+
+</style>
+
+}
