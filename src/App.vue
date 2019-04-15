@@ -82,14 +82,7 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-
-          <v-breadcrumbs :items="items">
-          <template v-slot:divider>
-            <v-icon>chevron_right</v-icon>
-          </template>
-        </v-breadcrumbs>
-
-    
+          <breadcumb></breadcumb>
     <v-content>
       <v-container>
         <v-layout>
@@ -119,6 +112,9 @@
               </v-tab>
               <v-tab href="#tab-4">
                 Dashboard
+              </v-tab>
+              <v-tab href="#tab-5">
+                Ver detalle
               </v-tab>
               <v-tabs-items v-model="model">
                 <v-tab-item
@@ -574,29 +570,13 @@
                                           {{ props.item.rut }}
                                         </v-list-tile-avatar>
                                       </td>
-                                      <td>
+                                      <td margin="2em 4em">
                                         <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
                                           
                                         </v-progress-linear>
                                       </td>
                                     </template>
                                   </v-data-table>
-                                  <v-list-tile
-                                    v-for="item in itm"
-                                    :key="item.title"
-                                    avatar>
-                                    <v-list-tile-avatar>
-                                      <img :src="item.avatar">
-                                    </v-list-tile-avatar>
-
-                                    <v-list-tile-content>
-                                      <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                                      <v-list-tile-sub-title v-html="item.rut"></v-list-tile-sub-title>
-                                    </v-list-tile-content>
-                                    <v-list-tile-content>
-                                      <v-progress-linear color="cyan" v-model="item.valueDeterminate"></v-progress-linear>
-                                    </v-list-tile-content>
-                                  </v-list-tile>
                                 </div>
                               </v-card-text>
                             </v-card-title>
@@ -672,8 +652,184 @@
                                       <v-card-text>
                                         <v-flex xs11>
                                           <div class="small">
-                                            <line-chart :chart-data="datacollection"></line-chart>
+                                            <bar-chart :chart-data="datacollection"></bar-chart>
                                           </div>     
+                                        </v-flex>
+                                      </v-card-text>
+                                    </v-card-title>
+                                    <v-card-text></v-card-text>
+                                  </v-card>
+                                </v-flex>
+                              </v-layout>
+                            </v-flex>
+                          </v-layout>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card>
+                </v-tab-item>
+
+                <v-tab-item
+                  :value="`tab-5`">
+                  <div class="subheading black--text font-weight-regular xs-2">
+                      <v-icon color="orange">adjust</v-icon>
+                      Resultados de evaluacion
+                  </div>
+                  <v-card flat>
+                    <v-container fluid grid-list-md>
+                      <v-layout row wrap>
+                        <!-- Resultados por persona -->
+
+                        <v-flex d-flex xs12 sm6 md6>
+                          <v-layout row wrap>
+                            <v-flex d-flex>
+                              <v-layout row wrap>
+
+                                <!-- Resultados personales -->
+                                <v-flex d-flex xs12>
+                                  <v-card
+                                    color="white"
+                                    dark>
+                                    <v-card-title primary class="title">
+                                      <v-card-text>
+                                        <div class="subheading black--text font-weight-regular xs-2">
+                                          <v-icon color="orange">people</v-icon>
+                                          Colaborador
+                                        </div>
+                                      </v-card-text>
+                                      <v-card-text>
+                                        <v-flex xs12>
+                                          <v-flex>
+                                            <v-avatar
+                                              size="75px">
+                                              <img src="https://cdn.vuetifyjs.com/images/lists/1.jpg" alt="alt">
+                                            </v-avatar>
+                                          </v-flex>
+                                          <v-divider></v-divider>
+                                          <Doughnut :chart-data="datacollection"></Doughnut>
+                                          
+                                        </v-flex>
+                                      </v-card-text>
+                                    </v-card-title>
+                                  </v-card>
+                                </v-flex>
+                                <!-- Resultados por competencia -->
+                                <v-flex
+                                  d-flex
+                                  xs12
+                                >
+                                  <v-card
+                                    color="white"
+                                    dark
+                                  >
+                                    <v-card-title primary class="title">
+                                      <v-card-text>
+                                        <div class="subheading black--text font-weight-regular xs-2">
+                                          <v-icon color="orange">sms</v-icon>
+                                          Feedback
+                                        </div>
+                                      </v-card-text>
+                                      <v-card-text>
+                                        <v-data-table
+                                          :items="feeds"                        
+                                          hide-actions
+                                          hide-headers
+                                          light
+                                          >
+                                          <template v-slot:items="props">
+
+                                            <td style="width:50px" rowspan="">
+                                              <v-list-tile-avatar>
+                                                <img :src="props.item.avatar">
+                                              </v-list-tile-avatar>
+                                            </td>
+                                            <td>
+                                              <p margin="2em 4em">{{ props.item.name }} <br> 
+                                              {{ props.item.date }} </p>
+                                              <p margin="2em 4em">{{ props.item.descrip }}</p>
+                                            </td>
+                                          </template> 
+                                        </v-data-table>
+                                      </v-card-text>
+                                    </v-card-title>
+                                    <v-card-text></v-card-text>
+                                  </v-card>
+                                </v-flex>
+                              </v-layout>
+                            </v-flex>
+                          </v-layout>
+                        </v-flex>
+
+                        <v-flex d-flex xs12 sm6 md6>
+                          <v-layout row wrap>
+                            <v-flex d-flex>
+                              <v-layout row wrap>
+
+                                <!-- Resultados personales -->
+                                <v-flex d-flex xs12>
+                                  <v-card
+                                    color="white"
+                                    dark>
+                                    <v-card-title primary class="title">
+                                      <v-card-text>
+                                        <div class="subheading black--text font-weight-regular xs-2">
+                                          <v-icon color="orange">equalizer</v-icon>
+                                          Competencias
+                                        </div>
+                                      </v-card-text>
+                                      <v-card-text>
+                                        <v-flex xs11>
+                                          
+                                          <div class="small">
+                                            <line-chart :chart-data="datacollection"></line-chart>
+                                          </div> 
+                                          
+                                          
+                                        </v-flex>
+                                      </v-card-text>
+                                    </v-card-title>
+                                  </v-card>
+                                </v-flex>
+                                <!-- Resultados por competencia -->
+                                <v-flex
+                                  d-flex
+                                  xs12>
+                                  <v-card
+                                    color="white"
+                                    dark
+                                  >
+                                    <v-card-title primary class="title">
+                                      <v-card-text>
+                                        <div class="subheading black--text font-weight-regular xs-2">
+                                          <v-icon color="orange">equalizer</v-icon>
+                                          Acciones
+                                        </div>
+                                      </v-card-text>
+                                      <v-card-text>
+                                        <v-flex xs11>
+                                          <v-data-table
+                                            :items="itm"
+                                            
+                                            hide-actions
+                                            hide-headers
+                                            light
+                                          >
+                                            <template v-slot:items="props">
+                                              
+                                              <td style="width:50px">
+                                                <v-list-tile-avatar>
+                                                  <img :src="props.item.avatar">
+                                                  {{ props.item.title }}
+                                                  
+                                                </v-list-tile-avatar>
+                                              </td>
+                                              <td margin="2em 4em">
+                                                <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
+                                                  
+                                                </v-progress-linear>
+                                              </td>
+                                            </template>
+                                          </v-data-table>    
                                         </v-flex>
                                       </v-card-text>
                                     </v-card-title>
@@ -702,11 +858,17 @@
 <script>
 
   import LineChart from './LineCharts.js'
+  import BarChart from './BarCharts.js'
+  import Doughnut from './DoughnutCharts.js'
+  import Breadcumb from './components/breadcumb.vue'
  
   export default {
     datacollection: null,
     components: {
-      LineChart
+      LineChart,
+      BarChart,
+      Breadcumb,
+      Doughnut
     },
     data () {
       return {
@@ -912,21 +1074,18 @@
     methods: {
       fillData () {
         this.datacollection = {
-          labels: ['Dato 1', 'Dato 2', 'Dato 3'],
+          labels: ['Dato 1', 'Dato 2', 'Dato 3', 'Dato 4',],
           datasets: [
             {
               label: 'Dato 1',
               backgroundColor: '#C65FE9',
-              data: [4, 5, 10]
+              data: [4, 5, 8, 4]
             }, {
               label: 'Dato 2',
               backgroundColor: '#3085E5',
-              data: [9, 7, 5]
-            }, {
-              label: 'Dato 3',
-              backgroundColor: '#58CCF4',
-              data: [1, 9, 2]
+              data: [9, 7, 8, 6]
             }
+             
           ]
         }
       }
