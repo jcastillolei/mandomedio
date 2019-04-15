@@ -537,19 +537,26 @@
                                 <div class="body-1 black--text font-weight-thin xs-2">
 
                                   <v-data-table
-                                    :items="desserts"
-                                    class="elevation-1"
+                                    :items="itm"
+                                    
                                     hide-actions
                                     hide-headers
                                     light
                                   >
                                     <template v-slot:items="props">
-                                      <td>{{ props.item.name }}</td>
-                                      <td class="text-xs-right">{{ props.item.calories }}</td>
-                                      <td class="text-xs-right">{{ props.item.fat }}</td>
-                                      <td class="text-xs-right">{{ props.item.carbs }}</td>
-                                      <td class="text-xs-right">{{ props.item.protein }}</td>
-                                      <td class="text-xs-right">{{ props.item.iron }}</td>
+                                      <td style="width:1px"></td>
+                                      <td style="width:50px">
+                                        <v-list-tile-avatar>
+                                          <img :src="props.item.avatar">
+                                          {{ props.item.title }}
+                                          {{ props.item.rut }}
+                                        </v-list-tile-avatar>
+                                      </td>
+                                      <td>
+                                        <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
+                                          
+                                        </v-progress-linear>
+                                      </td>
                                     </template>
                                   </v-data-table>
                                   <v-list-tile
@@ -568,7 +575,6 @@
                                       <v-progress-linear color="cyan" v-model="item.valueDeterminate"></v-progress-linear>
                                     </v-list-tile-content>
                                   </v-list-tile>
-                                
                                 </div>
                               </v-card-text>
                             </v-card-title>
@@ -585,8 +591,44 @@
                                 >
                                   <v-card
                                     color="white"
-                                    dark
-                                  >
+                                    dark>
+                                    <v-card-title primary class="title">
+                                      <v-card-text>
+                                        <div class="subheading black--text font-weight-regular xs-2">
+                                          <v-icon color="orange">equalizer</v-icon>
+                                          Resultados por persona
+                                        </div>
+                                      </v-card-text>
+                                      <v-card-text> 
+                                        <div class="body-1 black--text font-weight-thin xs-2">
+
+                                          <v-data-table
+                                            :items="itm"
+                                            
+                                            hide-actions
+                                            hide-headers
+                                            light
+                                          >
+                                            <template v-slot:items="props">
+                                              <td style="width:1px"></td>
+                                              <td style="width:50px">
+                                                <v-list-tile-avatar>
+                                                  <img :src="props.item.avatar">
+                                                  {{ props.item.title }}
+                                                  {{ props.item.rut }}
+                                                </v-list-tile-avatar>
+                                              </td>
+                                              <td>
+                                                <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
+                                                  
+                                                </v-progress-linear>
+                                              </td>
+                                            </template>
+                                          </v-data-table>
+                                        
+                                        </div>
+                                      </v-card-text>
+                                    </v-card-title>
                                   </v-card>
                                 </v-flex>
                                 <v-flex
@@ -626,7 +668,7 @@
         drawer: null,
         itm: [
           
-          { active: true, title: 'Jason Oner', rut:'<span class=text--primary>11.111.111-1</span>', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          { active: true, title: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
           valueDeterminate: 50 },
           
           { active: true, title: 'Ranee Carlson', rut:'11.111.111-2', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
