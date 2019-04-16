@@ -1,29 +1,45 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" width="210px" fixed app>
-        <v-layout align-center
-          justify-center
-          wrap>
-          
-            <v-img 
-            src="http://www.mandomedio.com/web/wp-content/uploads/Logo-MM-2017-08-1.png" 
-            height="40"
-            
-            contain
-            background-position: center
-            >
-              
-            </v-img>
+    <v-layout row justify-center>
+      <v-dialog v-model="dialog2" max-width="500px"
+        transition="dialog-bottom-transition" light>
+        <v-card>
+          <v-card-title>
+            Feedback
+          </v-card-title>
+          <v-card-text>
+           
+           <v-textarea
+          outline
+          name="input-7-4"
+          label="Outline textarea"
+          value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+        ></v-textarea>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" flat @click="dialog2=false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+
+    <v-navigation-drawer v-model="drawer" class="mmsidebar" app floating>
+        <v-layout align-center justify-center wrap>
+          <v-img src="http://www.mandomedio.com/web/wp-content/uploads/Logo-MM-2017-08-1.png" 
+          height="40"
+          contain
+          background-position: center
+          >    
+          </v-img>
 
         </v-layout>
         
           <v-layout align-center
           justify-center
           wrap>
-              <v-avatar size="50%" >
+              <v-avatar size="70%" class=mmavatar >
                 <img
-                  src="https://cdn.vuetifyjs.com/images/john.jpg"
-                  alt="John"
+                  src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John"
                   >
               </v-avatar>
           </v-layout>
@@ -31,12 +47,12 @@
           justify-center
           wrap>
             <v-card-title primary-title >
-              <div class="title font-weight-bold">
+              <div class="title mmname">
                 Marcelo Scott A.
               </div>    
             </v-card-title>
             <v-flex xs12 align="center">
-              <div class="body-1 font-weight-medium text-xs-center">
+              <div class="mmcargo font-weight-medium text-xs-center">
                 Gerente operaciones<br>11.665.946-K
               </div> 
             </v-flex>
@@ -88,7 +104,7 @@
         <v-layout>
           <v-flex xs12>   
               <div class="mmtitle">
-                <v-icon color="orange darken-2">adjust</v-icon>
+                <v-icon color="orange darken-2 mmicontitle">adjust</v-icon>
                 Evaluaciones
               </div> 
           </v-flex>
@@ -101,24 +117,25 @@
             color="transparent"
             slider-color="orange"
             >
-              <v-tab href="#tab-1">
+              <v-tab href="#tab-1" 
+            class="mmtabs-padding">
                 Personales
               </v-tab>
-              <v-tab href="#tab-2">
+              <v-tab href="#tab-2" class="mmtabs-padding">
                 Mi equipo
               </v-tab>
-              <v-tab href="#tab-3">
+              <v-tab href="#tab-3" class="mmtabs-padding">
                 Equipo indirecto
               </v-tab>
-              <v-tab href="#tab-4">
+              <v-tab href="#tab-4" class="mmtabs-padding">
                 Dashboard
               </v-tab>
-              <v-tab href="#tab-5">
+              <v-tab href="#tab-5" class="mmtabs-padding">
                 Ver detalle
               </v-tab>
               <v-tabs-items v-model="model">
                 <v-tab-item
-                  :value="`tab-1`">
+                  :value="`tab-1`" class="mmtabs-padding" >
                   <v-card flat>
                     <v-data-table
                       :headers="headers"
@@ -202,7 +219,7 @@
                 </v-tab-item>
 
                 <v-tab-item
-                  :value="`tab-2`">
+                  :value="`tab-2`" class="mmtabs-padding" >
                   <v-card flat>
                     <v-data-table
                       :headers="headers2"
@@ -372,7 +389,7 @@
                 </v-tab-item>
 
                 <v-tab-item
-                  :value="`tab-3`">
+                  :value="`tab-3`" class="mmtabs-padding" >
                   <v-card flat>
                     <div class="body-1 font-weight-thin xs-2">
                       Reporte directo del equipo de:
@@ -383,10 +400,11 @@
                           <v-flex
                             xs12
                             md4>
-                            <v-select
+                            <v-select 
                               :items="items"
                               label="Seleccionar lider"
-                              outline
+                              content-class="menu__content--select"
+                              offset-y
                             ></v-select>
                           </v-flex>
 
@@ -403,6 +421,7 @@
                       </v-container>
                     </v-form>
                   </v-card>
+
                   <v-card flat>
                     <v-data-table
                       :headers="headers2"
@@ -516,13 +535,13 @@
                 </v-tab-item>
 
                 <v-tab-item
-                  :value="`tab-4`">
+                  :value="`tab-4`" class="mmtabs-padding" >
                   <v-card flat>
                     <v-container fluid grid-list-md>
                       <v-layout row wrap>
                         <!-- Resultados por persona -->
                         <v-flex d-flex xs12 sm6 md6>
-                          <v-card color="white" dark>
+                          <v-card color="white" >
                             <v-card-title primary class="title">
                               <v-card-text>
                                 <div class="subheading black--text font-weight-regular xs-2">
@@ -541,9 +560,7 @@
                                           <v-select
                                             :items="items"
                                             label="Seleccionar lider"
-                                            outline
-                                            color="black"
-                                            background-color="black"
+                                            solo
                                           ></v-select>
                                         </v-layout>
                                       </v-container>
@@ -552,34 +569,30 @@
                                   <v-flex xs5 md5>    
                                   </v-flex>
                                 </div>
-                                <div class="body-1 black--text font-weight-thin xs-2">
+                                
+                                <v-list two-line>
+                                  <template v-for="(item) in itm">
+                                    <v-list-tile
+                                      :key="item.name"
+                                      avatar>
+                                      <v-list-tile-avatar>
+                                        <img :src="item.avatar">
+                                      </v-list-tile-avatar>
+                                      <v-list-tile-content>
+                                        <v-list-tile-title v-html="item.name"></v-list-tile-title>
+                                        <v-list-tile-sub-title v-html="item.rut"></v-list-tile-sub-title>
+                                      </v-list-tile-content>
 
-                                  <v-data-table
-                                    :items="itm"
-                                    
-                                    hide-actions
-                                    hide-headers
-                                    light
-                                  >
-                                    <template v-slot:items="props">
-                                      <td style="width:1px"></td>
-                                      <td style="width:50px">
-                                        <v-list-tile-avatar>
-                                          <img :src="props.item.avatar">
-                                          {{ props.item.title }}
-                                          {{ props.item.rut }}
-                                        </v-list-tile-avatar>
-                                      </td>
-                                      <td margin="2em 4em">
-                                        <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
-                                          
-                                        </v-progress-linear>
-                                      </td>
-                                    </template>
-                                  </v-data-table>
-                                </div>
+                                       <v-list-tile-content>
+                                          <v-progress-linear color="#2cd9c5" v-model="item.valueDeterminate">
+                                      </v-progress-linear>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                  </template>
+                                </v-list>
                               </v-card-text>
                             </v-card-title>
+
                             <v-card-text></v-card-text>
                           </v-card>
                         </v-flex>
@@ -593,42 +606,33 @@
                                 <v-flex d-flex xs12>
                                   <v-card
                                     color="white"
-                                    dark>
+                                    >
                                     <v-card-title primary class="title">
                                       <v-card-text>
                                         <div class="subheading black--text font-weight-regular xs-2">
                                           <v-icon color="orange">equalizer</v-icon>
-                                          Resultados personales
+                                          Evaluaciones contestadas
                                         </div>
                                       </v-card-text>
                                       <v-card-text>
-                                        <v-flex xs11>
-                                          
-                                          <v-list-tile-avatar>
-                                            <img :src="imgUsu">    
-                                          </v-list-tile-avatar>
-                                          
-                                          <v-data-table
-                                            :items="comp"   
-                                            hide-actions
-                                            hide-headers
-                                            light>
-                                            
-                                            <template v-slot:items="props">
-                                              <td width="60px">
-                                                <v-card-text>
-                                                  {{ props.item.titulo }}
-                                                </v-card-text>
-                                                
-                                              </td>
-                                              <td>
-                                                <v-progress-linear color="cyan" v-model="props.item.porcent">
-                                                  
-                                                </v-progress-linear>
-                                              </td>
-                                            </template>
-                                          </v-data-table>
-                                        </v-flex>
+
+                                        <v-list two-line>
+                                          <template v-for="(item) in comp">
+                                            <v-list-tile
+                                              :key="item.titulo"
+                                              avatar>
+                                              <v-list-tile-content>
+                                                <v-list-tile-title v-html="item.titulo"></v-list-tile-title>
+                                              </v-list-tile-content>
+                                               <v-list-tile-content>
+                                                  <v-progress-linear color="#2cd9c5" v-model="item.porcent">
+                                              </v-progress-linear>
+                                                </v-list-tile-content>
+                                            </v-list-tile>
+                                          </template>
+                                        </v-list>
+
+                                       
                                       </v-card-text>
                                     </v-card-title>
                                   </v-card>
@@ -652,7 +656,8 @@
                                       <v-card-text>
                                         <v-flex xs11>
                                           <div class="small">
-                                            <bar-chart :chart-data="datacollection"></bar-chart>
+                                            <!--<bar-chart :chart-data="datacollection"></bar-chart>-->
+                                            <bar-chart></bar-chart>
                                           </div>     
                                         </v-flex>
                                       </v-card-text>
@@ -670,7 +675,7 @@
                 </v-tab-item>
 
                 <v-tab-item
-                  :value="`tab-5`">
+                  :value="`tab-5`" class="mmtabs-padding" >
                   <div class="subheading black--text font-weight-regular xs-2">
                       <v-icon color="orange">adjust</v-icon>
                       Resultados de evaluacion
@@ -680,41 +685,125 @@
                       <v-layout row wrap>
                         <!-- Resultados por persona -->
 
-                        <v-flex d-flex xs12 sm6 md6>
+                        <v-flex d-flex xs12 sm6 md6 light>
                           <v-layout row wrap>
                             <v-flex d-flex>
                               <v-layout row wrap>
-
-                                <!-- Resultados personales -->
-                                <v-flex d-flex xs12>
-                                  <v-card
-                                    color="white"
-                                    dark>
-                                    <v-card-title primary class="title">
-                                      <v-card-text>
-                                        <div class="subheading black--text font-weight-regular xs-2">
-                                          <v-icon color="orange">people</v-icon>
-                                          Colaborador
+                                <v-flex xs12>
+                                <v-card color="white">
+                                  <v-layout>
+                                    <v-flex xs2 class="mmmargin5">
+                                      <v-avatar
+                                        size="100px">
+                                        <img src="https://cdn.vuetifyjs.com/images/lists/1.jpg" alt="alt">
+                                      </v-avatar>
+                                    </v-flex>
+                                    <v-flex xs10>
+                                      <v-card-title primary-title>
+                                        <div>
+                                          <div class="title mmcolaborator-name">Jaime Sanz</div>
+                                          <div class="mmcolaborator-position">Chief Technology Officer</div>
+                                          <div class="mmcolaborator-position">16.796.331-5</div>
+                                          <div class="mmcolaborator-position">Gerencia IT</div>
                                         </div>
-                                      </v-card-text>
-                                      <v-card-text>
-                                        <v-flex xs12>
-                                          <v-flex>
-                                            <v-avatar
-                                              size="75px">
-                                              <img src="https://cdn.vuetifyjs.com/images/lists/1.jpg" alt="alt">
-                                            </v-avatar>
-                                          </v-flex>
-                                          <v-divider></v-divider>
-                                          <Doughnut :chart-data="datacollection"></Doughnut>
-                                          
-                                        </v-flex>
-                                      </v-card-text>
-                                    </v-card-title>
-                                  </v-card>
-                                </v-flex>
-                                <!-- Resultados por competencia -->
-                                <v-flex
+                                      </v-card-title>
+                                    </v-flex>
+                                  </v-layout>
+                                  <v-divider light></v-divider>
+
+                                  <v-layout>
+                                    <v-flex xs4 class="mmmargin5">
+                                      <v-progress-circular
+                                        :rotate="270"
+                                        :size="120"
+                                        :width="12"
+                                        :value="68"
+                                        color="#ee8147"
+                                        >
+                                        <span class="text-xs-center mminside-graph">Objetivos 68 </span>
+                                      </v-progress-circular>
+                                    </v-flex>
+
+                                    <v-flex xs4 class="mmmargin5">
+                                      <v-progress-circular
+                                        :rotate="270"
+                                        :size="120"
+                                        :width="12"
+                                        :value="87"
+                                        color="#ffe700"
+                                        >
+                                        <span class="text-xs-center mminside-graph">Competencia 87 </span>
+                                      </v-progress-circular>
+                                    </v-flex>
+
+                                    <v-flex xs4 class="mmmargin5">
+                                      <v-progress-circular
+                                        :rotate="270"
+                                        :size="120"
+                                        :width="12"
+                                        :value="82"
+                                        color="#2cd9c5"
+                                        >
+                                        <span class="text-xs-center mminside-graph">Nota final 82</span>
+                                      </v-progress-circular>
+                                    </v-flex>
+                                   
+                                  </v-layout>
+                                  <v-divider light></v-divider>
+                                </v-card>
+                              </v-flex>
+
+                              <v-flex xs12 >
+                                <v-card>
+                                  <v-toolbar color="white" flat>
+                                    <v-toolbar-side-icon>
+                                      <v-icon color="orange">sms</v-icon>
+                                    </v-toolbar-side-icon>
+
+                                    <v-toolbar-title>Feedback</v-toolbar-title>
+
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn fab dark small color="orange">
+                                      <v-icon dark @click="dialog2 = true">add</v-icon>
+                                    </v-btn>
+                                  </v-toolbar>
+
+                                  <v-list three-line>
+                                    <template v-for="(item, index) in feeds">
+                                      <v-subheader
+                                        v-if="item.header"
+                                        :key="item.header"
+                                      >
+                                        {{ item.header }}
+                                      </v-subheader>
+
+                                      <v-divider
+                                        v-else-if="item.divider"
+                                        :key="index"
+                                        :inset="item.inset"
+                                      ></v-divider>
+
+                                      <v-list-tile
+                                        v-else
+                                        :key="item.title"
+                                        avatar
+                                        @click=""
+                                      >
+                                        <v-list-tile-avatar>
+                                          <img :src="item.avatar">
+                                        </v-list-tile-avatar>
+
+                                        <v-list-tile-content>
+                                          <v-list-tile-title v-html="item.name"></v-list-tile-title>
+                                          <v-list-tile-sub-title v-html="item.descrip"></v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                    </template>
+                                  </v-list>
+                                </v-card>
+                              </v-flex>
+                                <!--<v-flex
                                   d-flex
                                   xs12
                                 >
@@ -754,7 +843,7 @@
                                     </v-card-title>
                                     <v-card-text></v-card-text>
                                   </v-card>
-                                </v-flex>
+                                </v-flex>-->
                               </v-layout>
                             </v-flex>
                           </v-layout>
@@ -781,7 +870,8 @@
                                         <v-flex xs11>
                                           
                                           <div class="small">
-                                            <line-chart :chart-data="datacollection"></line-chart>
+                                            <!--<line-chart :chart-data="datacollection"></line-chart>-->
+                                            <area-chart></area-chart>
                                           </div> 
                                           
                                           
@@ -854,18 +944,17 @@
   </v-app>
 </template>
 
-
 <script>
 
-  import LineChart from './LineCharts.js'
-  import BarChart from './BarCharts.js'
+  import AreaChart from './components/areachart.vue'
+  import BarChart from './components/barchart.vue'
   import Doughnut from './DoughnutCharts.js'
   import Breadcumb from './components/breadcumb.vue'
  
   export default {
     datacollection: null,
     components: {
-      LineChart,
+      AreaChart,
       BarChart,
       Breadcumb,
       Doughnut
@@ -874,19 +963,37 @@
       return {
         dialog: false,
         drawer: null,
+        dialog2: false,
+        headers1: [
+          { align: 'left', sortable: false, text: 'Trabajador', value: 'calories', width: "40%" },
+          { align: 'center', sortable: false, text: 'Progreso', value: 'fat',width: "50%" },
+        ],
         itm: [
           
-          { active: true, title: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          valueDeterminate: 50 },
+          { active: true, name: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          valueDeterminate: 50, },
           
-          { active: true, title: 'Ranee Carlson', rut:'11.111.111-2', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+          { active: true, name: 'Ranee Carlson', rut:'11.111.111-2', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
           valueDeterminate: 65 },
           
-          { title: 'Cindy Baker', rut:'11.111.111-3', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+          { name: 'Cindy Baker', rut:'11.111.111-3', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
           valueDeterminate: 40 },
           
-          { title: 'Ali Connors', rut:'11.111.111-4', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          valueDeterminate: 20 }
+          { name: 'Ali Connors', rut:'11.111.111-4', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+          valueDeterminate: 20 },
+
+          { name: 'Erick Saldaño', rut:'11.111.111-3', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+          valueDeterminate: 40 },
+          
+          { name: 'Gustavo Castillo', rut:'11.111.111-4', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+          valueDeterminate: 70 },
+
+          { name: 'Jaime Sanz', rut:'11.111.111-4', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+          valueDeterminate: 50 },
+
+          { name: 'Monica', rut:'11.111.111-4', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+          valueDeterminate: 70 }
+
         ],
         
         items: [
@@ -1016,11 +1123,11 @@
         ],
         comp: [
           {
-            titulo: 'Item 1',
-            porcent: 52,
+            titulo: 'Autoevaluaciones',
+            porcent: 75,
           },
           {
-            titulo: 'Item 2',
+            titulo: 'Descendentes',
             porcent: 12,
           }
         ],
@@ -1033,19 +1140,19 @@
           },
           {
             avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-            name: 'User',
+            name: 'Colaborador',
             date: '03 Mayo 2019, 12:54 hrs',
             descrip: 'Tienes todo para ser un gran lider, pero debes enfocarte mas en tu trabajo y mantener siempre objetivos claros',
           },
           {
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-            name: 'User',
+            name: 'Colaborador',
             date: '18 Mayo 2019, 10:21 hrs',
             descrip: 'Tienes todo para ser un gran lider, pero debes enfocarte mas en tu trabajo y mantener siempre objetivos claros',
           },
           {
             avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-            name: 'User',
+            name: 'Marcelo Scott',
             date: '27 Junio 2019, 12:34 hrs',
             descrip: 'Tienes todo para ser un gran lider, pero debes enfocarte mas en tu trabajo y mantener siempre objetivos claros',
           }
@@ -1094,7 +1201,51 @@
   }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+
+  .mminside-graph {
+    font-family: Nunito Sans;
+    font-size: 15px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.09;
+    letter-spacing: normal;
+    text-align: center;
+    color: #778b97;
+  }
+
+
+  .mmcolaborator-name {
+    width: 161px;
+    height: 30px;
+    font-family: Nunito Sans;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #778b97;
+  }
+
+  .mmcolaborator-position {
+    height: 25px;
+    font-family: Nunito Sans;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #778b97;
+  }
+
+
+  .mmmargin5 {
+    margin: 5%;
+  }
+
+  div.apexcharts-menu  {
+    background-color: #ddd;
+    color: #000;
+  }
 
   .mmtable .v-table tbody tr :not(:last-child) {
     border-bottom: none;
@@ -1104,9 +1255,24 @@
     background-color: #fafafa;
   }
 
+  tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+  }
+
+
   .mmtable .v-table tbody tr td{
     padding: 28px 24px;
     font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #778b97;
+  }
+
+  .mmtableworker .v-table tbody tr td{
+    padding: 15px 10px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -1145,18 +1311,199 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: #333333;
+    color: #778b97;
     margin-bottom: 40px;
+  }
 
+  .mmname {
+    font-family: Nunito Sans;
+    font-size: 28px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #778b97;
+    margin-bottom: 5px;
   }
 
   .v-breadcrumbs {
-    margin-left: 17%;
+    margin-top:1%;
+    margin-left: 23%;
+  }
+
+  .v-list__tile__title {
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #778b97;
+  }
+
+  .v-list__tile {
+    margin-bottom:15px;
+  }
+
+  .v-navigation-drawer > .v-list .v-list__tile {
+    margin-bottom: 10px;
+  }
+
+  .mmsidebar {
+    padding-top: 2%;
+    box-shadow: 5px 10px 30px 0 rgba(41, 26, 204, 0.12);
+    width: 250px
+  }
+
+  .mmavatar {
+    margin-top: 20%;
+  }
+
+  .mmcargo {
+    color: #778b97;
+  }
+
+  .mmtitle i {
+    line-height: 1.5px;
   }
 
 
-  
+  .mmtabs-padding {
+    border-bottom: 0.02em solid #ccc;
+    padding-bottom:25px;
+  }
 
+  $input-height: 40px;
+  $input-border-radius: 8px;
+
+  .v-text-field {
+    position: relative; // Allow label positioning (children cannot have "position")
+    margin-top: 28px; // Add space for fixed label
+
+    // Having relative position messes up labels.
+    //   Labels must be positioned relative to ".v-text-field" (icon issues)
+    .v-input__control,
+    .v-input__slot,
+    .v-text-field__slot,
+    .v-menu,
+    .v-menu__activator {
+      position: unset;
+    }
+
+    // Align appended/preppended outer icons properly (must be fixed)
+    .v-input__append-outer,
+    .v-input__prepend-outer {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    // Align appended/preppended inner icons properly (can use flex)
+    .v-input__append-inner,
+    .v-input__prepend-inner {
+      align-self: center;
+      margin: 0;
+      padding: 0;
+    }
+    .v-input__prepend-inner {
+      margin-right: 8px;
+    }
+    .v-input__append-inner {
+      margin-left: 8px;
+    }
+
+    // Input component/icons (above details)
+    .v-input__slot {
+      height: $input-height;
+      padding: 4px 8px;
+      border: 1px solid #bccaca;
+      border-radius: $input-border-radius;
+      transition: border-color 0.2s ease-in-out;
+
+      // Remove default input underline
+      &:before {
+        display: none;
+      }
+      &:after {
+        display: none;
+      }
+      
+      input {
+        padding: 0; // Reset padding
+      }
+
+      label {
+        transform: translateY(-32px); // Position label vertically
+        font-size: 18px;
+        transition: color 0.2s ease-in-out;
+      }
+    }
+
+    // Disabled input
+    &.v-input--is-disabled {
+      .v-input__slot {
+        background-color: #eeeeee;
+      }
+    }
+
+    // Error state
+    &.v-input--has-state.error--text:not(.v-input--is-focused) {
+      .v-input__slot {
+        border-color: #ff5252; // Replacement for 'underline' behaviour
+      }
+    }
+
+    // Highlight currently focused field
+    &.v-input--is-focused {
+      .v-input__slot {
+        border-color: #04b7bd; // Replacement for 'underline' behaviour
+      }
+
+      // When errors fields are focused only the border should change,
+      //   and all other error colours should remain (label, icons, etc).
+      &:not(.v-input--has-state):not(.error--text) {
+        .v-label {
+          color: #04b7bd !important; // Vuetify override (".primary--text")
+        }
+
+        // Focused icon colours
+        .v-input__append-inner i,
+        .v-input__append-outer i,
+        .v-input__prepend-inner i,
+        .v-input__prepend-outer i {
+          color: #04b7bd !important; // Vuetify override (".primary--text")
+          transition: color 0.15s ease-in-out; // Shorter transition to avoid "jump"
+        }
+      }
+    }
+    
+    // Progress indicator
+    .v-progress-linear {
+      top: calc(#{$input-height} + 2px);
+      left: #{$input-border-radius};
+      width: calc(100% - #{$input-border-radius} * 2);
+      border-radius: 2px;
+    }
+  }
+
+  .menu__content--select {
+    border-radius: 8px;
+  }
+
+  .v-list__tile__content {
+    width: 50%;
+  }
+
+  .v-card .v-card--flat .v-sheet .theme--light {
+    background-color: transparent;
+  }
+
+  .theme--light.v-sheet {
+    background-color: transparent;
+  }
+
+  .theme--light.v-card {
+    background-color: transparent;
+  }
 
 </style>
 
