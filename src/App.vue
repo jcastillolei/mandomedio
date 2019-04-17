@@ -12,12 +12,46 @@
            <v-textarea
           outline
           name="input-7-4"
-          label="Outline textarea"
+          label="Comentario"
           value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
         ></v-textarea>
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" flat @click="dialog2=false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialog3" max-width="500px"
+        transition="dialog-bottom-transition" light>
+        <v-card>
+          <v-card-title>
+            Crear nueva accion
+          </v-card-title>
+          <v-card-text>
+           
+           <v-textarea
+            outline
+            name="input-7-4"
+            label="Accion"
+            value="Esta será una accion medible"
+          ></v-textarea>
+
+          <v-layout row>
+            <v-flex xs4>
+              <v-subheader>Compromiso</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+              <v-text-field
+                label="Cantidad"
+                value="10"
+                suffix="veces"
+              ></v-text-field>
+            </v-flex>
+    </v-layout>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" flat @click="dialog3=false">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -90,7 +124,7 @@
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title class="grey--text">
+              <v-list-tile-title :class="item.class">
                 {{ item.text }}
               </v-list-tile-title>
             </v-list-tile-content>
@@ -253,7 +287,14 @@
                           
                           {{ props.item.estado }}
                         </td>
-                        <td class="text-xs-left">{{ props.item.usuario }}</td>
+                        <td class="text-md-left">
+                          <v-avatar>
+                            <img :src="props.item.usuario.avatar" class="mmmargin50">
+                          </v-avatar>
+                          &nbsp;
+                          <strong >{{ props.item.usuario.name }} </strong>
+                          <div class="text-lg-right">{{ props.item.usuario.rut }}</div>
+                        </td>
                         <td class="text-xs-left">{{ props.item.notaFin }}</td>
                         <td class="text-xs-left">{{ props.item.notaCom }}</td>
                         <td class="text-xs-left">{{ props.item.notaObj }}</td>
@@ -405,6 +446,7 @@
                               label="Seleccionar lider"
                               content-class="menu__content--select"
                               offset-y
+                              solo
                             ></v-select>
                           </v-flex>
 
@@ -412,7 +454,8 @@
                             xs12
                             md4>
                             <v-text-field
-                              outline
+                              
+                              solo
                               label="Buscar"
                               prepend-inner-icon="search"
                             ></v-text-field>
@@ -454,7 +497,14 @@
                           
                           {{ props.item.estado }}
                         </td>
-                        <td class="text-xs-left">{{ props.item.usuario }}</td>
+                        <td class="text-md-left">
+                          <v-avatar>
+                            <img :src="props.item.usuario.avatar" class="mmmargin50">
+                          </v-avatar>
+                          &nbsp;
+                          <strong >{{ props.item.usuario.name }} </strong>
+                          <div class="text-lg-right">{{ props.item.usuario.rut }}</div>
+                        </td>
                         <td class="text-xs-left">{{ props.item.notaFin }}</td>
                         <td class="text-xs-left">{{ props.item.notaCom }}</td>
                         <td class="text-xs-left">{{ props.item.notaObj }}</td>
@@ -705,6 +755,7 @@
                                           <div class="mmcolaborator-position">Chief Technology Officer</div>
                                           <div class="mmcolaborator-position">16.796.331-5</div>
                                           <div class="mmcolaborator-position">Gerencia IT</div>
+                                          <div class="mmcolaborator-position"><strong>Evaluador: Marcelo Scott</strong></div>
                                         </div>
                                       </v-card-title>
                                     </v-flex>
@@ -803,47 +854,7 @@
                                   </v-list>
                                 </v-card>
                               </v-flex>
-                                <!--<v-flex
-                                  d-flex
-                                  xs12
-                                >
-                                  <v-card
-                                    color="white"
-                                    dark
-                                  >
-                                    <v-card-title primary class="title">
-                                      <v-card-text>
-                                        <div class="subheading black--text font-weight-regular xs-2">
-                                          <v-icon color="orange">sms</v-icon>
-                                          Feedback
-                                        </div>
-                                      </v-card-text>
-                                      <v-card-text>
-                                        <v-data-table
-                                          :items="feeds"                        
-                                          hide-actions
-                                          hide-headers
-                                          light
-                                          >
-                                          <template v-slot:items="props">
-
-                                            <td style="width:50px" rowspan="">
-                                              <v-list-tile-avatar>
-                                                <img :src="props.item.avatar">
-                                              </v-list-tile-avatar>
-                                            </td>
-                                            <td>
-                                              <p margin="2em 4em">{{ props.item.name }} <br> 
-                                              {{ props.item.date }} </p>
-                                              <p margin="2em 4em">{{ props.item.descrip }}</p>
-                                            </td>
-                                          </template> 
-                                        </v-data-table>
-                                      </v-card-text>
-                                    </v-card-title>
-                                    <v-card-text></v-card-text>
-                                  </v-card>
-                                </v-flex>-->
+                              
                               </v-layout>
                             </v-flex>
                           </v-layout>
@@ -855,7 +866,7 @@
                               <v-layout row wrap>
 
                                 <!-- Resultados personales -->
-                                <v-flex d-flex xs12>
+                                <v-flex xs12>
                                   <v-card
                                     color="white"
                                     dark>
@@ -881,51 +892,61 @@
                                   </v-card>
                                 </v-flex>
                                 <!-- Resultados por competencia -->
-                                <v-flex
-                                  d-flex
-                                  xs12>
-                                  <v-card
-                                    color="white"
-                                    dark
-                                  >
-                                    <v-card-title primary class="title">
-                                      <v-card-text>
-                                        <div class="subheading black--text font-weight-regular xs-2">
-                                          <v-icon color="orange">equalizer</v-icon>
-                                          Acciones
-                                        </div>
-                                      </v-card-text>
-                                      <v-card-text>
-                                        <v-flex xs11>
-                                          <v-data-table
-                                            :items="itm"
-                                            
-                                            hide-actions
-                                            hide-headers
-                                            light
-                                          >
-                                            <template v-slot:items="props">
-                                              
-                                              <td style="width:50px">
-                                                <v-list-tile-avatar>
-                                                  <img :src="props.item.avatar">
-                                                  {{ props.item.title }}
-                                                  
-                                                </v-list-tile-avatar>
-                                              </td>
-                                              <td margin="2em 4em">
-                                                <v-progress-linear color="cyan" v-model="props.item.valueDeterminate">
-                                                  
-                                                </v-progress-linear>
-                                              </td>
-                                            </template>
-                                          </v-data-table>    
-                                        </v-flex>
-                                      </v-card-text>
-                                    </v-card-title>
-                                    <v-card-text></v-card-text>
-                                  </v-card>
-                                </v-flex>
+                                <v-flex xs12 >
+                                <v-card>
+                                  <v-toolbar color="white" flat>
+                                    <v-toolbar-side-icon>
+                                      <v-icon color="orange">sms</v-icon>
+                                    </v-toolbar-side-icon>
+
+                                    <v-toolbar-title>Acciones</v-toolbar-title>
+
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn fab dark small color="orange">
+                                      <v-icon dark @click="dialog3 = true">add</v-icon>
+                                    </v-btn>
+                                  </v-toolbar>
+
+                                  <v-list three-line>
+                                    <template v-for="(item, index) in actions">
+                                      <v-subheader
+                                        v-if="item.header"
+                                        :key="item.header"
+                                      >
+                                        {{ item.header }}
+                                      </v-subheader>
+
+                                      <v-divider
+                                        v-else-if="item.divider"
+                                        :key="index"
+                                        :inset="item.inset"
+                                      ></v-divider>
+
+                                      <v-list-tile
+                                        v-else
+                                        :key="item.title"
+                                        avatar
+                                        @click=""
+                                      >
+                                        
+
+                                        <v-list-tile-content>
+                                          <v-list-tile-title v-html="item.name"></v-list-tile-title>
+                                          <v-list-tile-sub-title v-html="item.descrip"></v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                        <v-list-action>
+                                          <v-progress-circular
+                                            color="#2cd9c5"
+                                            :rotate="270"
+                                            :value="75"
+                                          ></v-progress-circular>
+                                        </v-list-action>
+                                      </v-list-tile>
+                                    </template>
+                                  </v-list>
+                                </v-card>
+                              </v-flex>
                               </v-layout>
                             </v-flex>
                           </v-layout>
@@ -964,6 +985,7 @@
         dialog: false,
         drawer: null,
         dialog2: false,
+        dialog3: false,
         headers1: [
           { align: 'left', sortable: false, text: 'Trabajador', value: 'calories', width: "40%" },
           { align: 'center', sortable: false, text: 'Progreso', value: 'fat',width: "50%" },
@@ -1015,9 +1037,10 @@
         ],
         listado: [
           { divider: true },
-          { icon: 'home', text: 'Home' },  
-          { icon: 'assignment', text: 'Encuestas' },
-          { icon: 'adjust', text: 'Evaluaciones' },
+          { icon: 'home', text: 'Home', class: 'grey--text' },  
+          { icon: 'assignment', text: 'Encuestas', class: 'grey--text' },
+          { icon: 'adjust', text: 'Evaluaciones', class: 'grey--text' },
+          { icon: 'power', text: 'Salir', class: 'selected_menu' },
         ],
         pes: [
           'Personales', 
@@ -1078,15 +1101,15 @@
           },
           { text: 'Usuario', value: 'usuario' },
           { text: 'Nota final', value: 'notaFin' },
-          { text: 'Nota competencias', value: 'notaCom' },
-          { text: 'Nota objetivos', value: 'notaObj' },
+          { text: 'Competencias', value: 'notaCom' },
+          { text: 'Objetivos', value: 'notaObj' },
           { text: 'Feedback', value: 'feedb' },
           { text: 'Accion', value: 'acc' }
         ],
         desserts2: [
           {
             estado: 'En proceso',
-            usuario: 'User',
+            usuario: { name: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
             notaFin: '60.0%',
             notaCom: '60.0%',
             notaObj: '60.0%',
@@ -1095,7 +1118,7 @@
           },
           {
             estado: 'Completada',
-            usuario: 'User',
+            usuario: { name: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
             notaFin: '56.0%',
             notaCom: '56.0%',
             notaObj: '56.0%',
@@ -1104,7 +1127,7 @@
           },
           {
             estado: 'En proceso',
-            usuario: 'User',
+            usuario: { name: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
             notaFin: '76.0%',
             notaCom: '76.0%',
             notaObj: '76.0%',
@@ -1113,7 +1136,7 @@
           },
           {
             estado: 'Inactiva',
-            usuario: 'User',
+            usuario: { name: 'Jason Oner', rut:'11.111.111-1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'},
             notaFin: '40.0%',
             notaCom: '40.0%',
             notaObj: '40.0%',
@@ -1129,6 +1152,26 @@
           {
             titulo: 'Descendentes',
             porcent: 12,
+          }
+        ],
+        actions: [
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            name: 'Desayunos equipo',
+            date: '01 Abril 2019, 12:01 hrs',
+            descrip: 'Desayuno todos los lunes con el equipo por 4 meses',
+          },
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            name: 'Reunion de equipo',
+            date: '03 Mayo 2019, 12:54 hrs',
+            descrip: 'Reunion semanal con galletas',
+          },
+          {
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            name: 'Salidas',
+            date: '18 Mayo 2019, 10:21 hrs',
+            descrip: '1 vez al mes salir con el equipo',
           }
         ],
         feeds: [
@@ -1202,6 +1245,14 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .mmmargin50 {
+    margin-top: 60%;
+  }
+
+  .selected_menu {
+    color: #ee8147;
+  }
 
   .mminside-graph {
     font-family: Nunito Sans;
@@ -1497,13 +1548,8 @@
     background-color: transparent;
   }
 
-  .theme--light.v-sheet {
-    background-color: transparent;
-  }
 
-  .theme--light.v-card {
-    background-color: transparent;
-  }
+ 
 
 </style>
 
